@@ -91,7 +91,7 @@ class Node:
 	def __init__(self, key, value):
 		self.key = key
 		self.value = value
-		self.priority = random.randint(0, 10000)
+		self.priority = random.randint(0, 2000000000)
 		self.prev = None
 		self.next = None
 		self.left = None
