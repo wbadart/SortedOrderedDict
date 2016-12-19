@@ -49,10 +49,36 @@ class SortedOrderedDict:
 		sorted_list = []
 
 		# Iterate through tree using iteritems_sorted function and add each item to a list
-		for key, value in self.iteritems_sorted():
-			sorted_list.append((key, value))
+		for key_value_pair in self.iteritems_sorted():
+			sorted_list.append(key_value_pair)
 
 		return sorted_list
+
+	# Generator for iterating through the map by order of insertion (first inserted first)
+	def iteritems_ordered(self):
+		curr = self.head
+
+		# While there is a current node, yield a 2-tuple with the format (key, value)
+		while curr:
+			yield (curr.key, curr.value)
+			curr = curr.next
+
+	# Generator for iterating through the map in reverse by order of insertion (most recently inserted first)
+	def iteritems_ordered_reverse(self):
+		curr = self.tail
+
+		# While there is a current node, yield a 2-tuple with the format (key, value)
+		yield (curr.key, curr.value)
+		curr = curr.prev
+
+	def to_ordered_list(self):
+		ordered_list = []
+		for key_value_pair in self.iteritems_ordered():
+			# Append the current key value pair to the list
+			ordered_list.append(key_value_pair)
+
+		return ordered_list
+			
 
 	# Helper function to recursively insert an element into the treap
 	def _insert_r(self, node, key, value):
