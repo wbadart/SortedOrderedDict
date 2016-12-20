@@ -46,7 +46,7 @@ Insertion and searching are fairly simple. You can insert using the *insert* fun
 ```
 
 ##Iteration
-This is the bread and butter of this data structure because it was designed with efficient iteration in mind. The dictionary can be iterated in sorted order or by order of insertion. A python list can also easily be created from the dictionary in both sorted order and by order of iteration. Examples of this functionality can be seen below.
+This is the bread and butter of this data structure because it was designed with versitile iteration in mind. The dictionary can be iterated in sorted order or by order of insertion. A python list can also easily be created from the dictionary in both sorted order and by order of iteration. Examples of this functionality can be seen below.
 
 ```
 # Create SortedOrderedDict instance and insert several key-value pairs
@@ -70,8 +70,10 @@ This is the bread and butter of this data structure because it was designed with
 ...   process()
 
 # Convert dictionary to list of 2-tuples in (key, value) format in sorted order
+# Also supports reverse=True keyword argument
 >>> sorted_list = map.to-sorted_list()
 
 # Convert dictionary to list of 2-tuples in (key, value) format ordered by insertion
+# Also supports reverse=True keyword argument
 >>> ordered_list = map.to_ordered_list()
 ```
