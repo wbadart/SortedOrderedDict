@@ -68,8 +68,9 @@ class SortedOrderedDict:
 		curr = self.tail
 
 		# While there is a current node, yield a 2-tuple with the format (key, value)
-		yield (curr.key, curr.value)
-		curr = curr.prev
+		while curr:
+			yield (curr.key, curr.value)
+			curr = curr.prev
 
 	def to_ordered_list(self):
 		ordered_list = []
