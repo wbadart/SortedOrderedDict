@@ -22,9 +22,18 @@ class SortedOrderedDict:
 		
 		return (node.value if node else None)
 
+	# Generator for iterating through items in sorted order
+	def iteritems_sorted(self, reverse=False):
+		if not reverse:
+			for item in self.iteritems_sorted_normal():
+				yield item
+		else:
+			for item in self.iteritems_sorted_reverse():
+				yield item
+
 	# Generator for iterating through elements in sorted order
 	# Yields a 2-tuple of the format (key, value)
-	def iteritems_sorted(self):
+	def iteritems_sorted_normal(self):
 		stack = []
 		curr = self.root
 		
@@ -69,20 +78,23 @@ class SortedOrderedDict:
 	def to_sorted_list(self, reverse=False):
 		sorted_list = []
 
-		if not reverse:
-			# Iterate through tree using iteritems_sorted function and add each item to a list
-			for key_value_pair in self.iteritems_sorted():
-				sorted_list.append(key_value_pair)
-
-		else:
-			# Iterate through tree using iteritems_sorted_reverse function and add each item to a list
-			for key_value_pair in self.iteritems_sorted_reverse():
-				sorted_list.append(key_value_pair)
+		# Iterate through tree using iteritems_sorted_reverse function and add each item to a list
+		for key_value_pair in self.iteritems_sorted(reverse=reverse):
+			sorted_list.append(key_value_pair)
 
 		return sorted_list
 
+	# Generator for iterating through the map by order of insertion
+	def iteritems_ordered(self, reverse=False):
+		if not reverse:
+			for item in self.iteritems_ordered_normal():
+				yield item
+		else:
+			for item in self.iteritems_ordered_reverse():
+				yield item
+
 	# Generator for iterating through the map by order of insertion (first inserted first)
-	def iteritems_ordered(self):
+	def iteritems_ordered_normal(self):
 		curr = self.head
 
 		# While there is a current node, yield a 2-tuple with the format (key, value)
@@ -102,16 +114,10 @@ class SortedOrderedDict:
 	# Return a list of the items in the dictionary ordered by order of insertion
 	def to_ordered_list(self, reverse=False):
 		ordered_list = []
-		if not reverse:
-			# Iterate through linked list starting with oldest key value pairs
-			for key_value_pair in self.iteritems_ordered():
-				# Append the current key value pair to the list
-				ordered_list.append(key_value_pair)
-		else:
-			# Iterate through linked list starting with newest key value pairs
-			for key_value_pair in self.iteritems_ordered_reverse():
-				# Append the current key value pair to the list
-				ordered_list.append(key_value_pair)
+		# Iterate through linked list
+		for key_value_pair in self.iteritems_ordered(reverse=reverse):
+			# Append the current key value pair to the list
+			ordered_list.append(key_value_pair)
 
 		return ordered_list
 			
