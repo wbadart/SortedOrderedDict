@@ -50,6 +50,27 @@ sorted_map = map.to_sorted_list()
 if len(sorted_map) != 1000000 or sorted(sorted_map) != sorted_map:
 	test_failure("FAILURE: map sorted iteration failed", 2)
 
+# Test reverse sorted iteration
+print("Testing reverse sorted iteration...")
+
+# Test using empty map
+print("\tTesting using empty map...")
+map = SortedOrderedDict()
+if map.to_sorted_list(reverse=True):
+	test_failure("FAILURE: empty map reverse sorted iteration failed", 3)
+
+# Test using full map
+print("\tTesting using full map...")
+map = SortedOrderedDict()
+for i in range(1000000):
+	map.insert(i, 2*i)
+
+reverse_sorted_map = map.to_sorted_list(reverse=True)
+if len(reverse_sorted_map) != 1000000 or sorted(reverse_sorted_map)[::-1] != reverse_sorted_map:
+	test_failure("FAILURE: map reverse sorted iteration failed", 3)
+
+
+
 # Test ordered iteration
 print("Testing ordered iteration...")
 
@@ -57,7 +78,7 @@ print("Testing ordered iteration...")
 print("\tTesting using empty map...")
 map = SortedOrderedDict()
 if map.to_ordered_list():
-	test_failure("FAILURE: empty map ordered iteration failed", 3)
+	test_failure("FAILURE: empty map ordered iteration failed", 4)
 
 # Test using single element
 print("\tTesting using map with one element...")
@@ -66,7 +87,7 @@ map.insert("test key", "test value")
 ordered_list = map.to_ordered_list()
 if len(ordered_list) != 1 or ordered_list[0] != ("test key", "test value"):
 	print(ordered_list)
-	test_failure("FAILURE: single-element map ordered iteration failed", 3)
+	test_failure("FAILURE: single-element map ordered iteration failed", 4)
 
 # Test using full map
 print("\tTesting using full map...")
@@ -81,26 +102,24 @@ for i in range(1000000):
 ordered_list = map.to_ordered_list()
 if ordered_list != list(elements.items()):
 	print("{} {}".format(len(ordered_list), len(elements)))
-	test_failure("FAILURE: full map ordered iteration failed", 3)
+	test_failure("FAILURE: full map ordered iteration failed", 4)
 
 # Test using reverse ordered iteration
-print("Testing ordered iteration...")
+print("Testing reverse ordered iteration...")
 
 # Test using empty map
 print("\tTesting using empty map...")
 map = SortedOrderedDict()
-for item in map.iteritems_ordered_reverse():
-	test_failure("FAILURE: empty map reverse ordered iteration failed", 4)
+if map.to_ordered_list(reverse=True):
+	test_failure("FAILURE: empty map reverse ordered iteration failed", 5)
 
 # Test using single element
 print("\tTesting using map with one element...")
 map = SortedOrderedDict()
 map.insert("test key", "test value")
-count = 0
-for i in map.iteritems_ordered_reverse():
-	count = count + 1
-if count != 1:
-	test_failure("FAILURE: single-element map reverse ordered iteration failed", 4)
+ordered_list = map.to_ordered_list(reverse=True)
+if len(ordered_list) != 1 or ordered_list[0] != ("test key", "test value"):
+	test_failure("FAILURE: single-element map reverse ordered iteration failed", 5)
 
 # Test using full map
 print("\tTesting using full map...")
@@ -112,9 +131,7 @@ for i in range(1000000):
 	map.insert(element[0], element[1])
 
 reversed_elements = list(elements.items())[::-1]
-for index, e in enumerate(map.iteritems_ordered_reverse()):
-	if e != reversed_elements[index]:
-		print("{} {}".format(e, reversed_elements[index]))
-		test_failure("FAILURE: full map reverse ordered iteration failed", 4)
+if map.to_ordered_list(reverse=True) != reversed_elements:
+	test_failure("FAILURE: full map reverse ordered iteration failed", 5)
 
 print("Tests Completed. All tests passed")

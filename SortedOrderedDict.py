@@ -44,13 +44,40 @@ class SortedOrderedDict:
 				# If no node is found and stack is empty, traversal is completed
 				break
 
+	# Generator or iterating through elements in reverse sorted order
+	# Yields a 2-tuple of the format (key, value)
+	def iteritems_sorted_reverse(self):
+		stack = []
+		curr = self.root
+
+		# Iterate until loop is broken
+		while True:
+			if curr is not None:
+				# Add current node to stack and traverse right
+				stack.append(curr)
+				curr = curr.right
+			elif stack:
+				# Yield current element and traverse left
+				curr = stack.pop()
+				yield (curr.key, curr.value)
+				curr = curr.left
+			else:
+				# If no node is found and stack is empty, traversal is completed
+				break
+
 	# Returns a list containing the elements in order sorted by key
-	def to_sorted_list(self):
+	def to_sorted_list(self, reverse=False):
 		sorted_list = []
 
-		# Iterate through tree using iteritems_sorted function and add each item to a list
-		for key_value_pair in self.iteritems_sorted():
-			sorted_list.append(key_value_pair)
+		if not reverse:
+			# Iterate through tree using iteritems_sorted function and add each item to a list
+			for key_value_pair in self.iteritems_sorted():
+				sorted_list.append(key_value_pair)
+
+		else:
+			# Iterate through tree using iteritems_sorted_reverse function and add each item to a list
+			for key_value_pair in self.iteritems_sorted_reverse():
+				sorted_list.append(key_value_pair)
 
 		return sorted_list
 
@@ -72,11 +99,19 @@ class SortedOrderedDict:
 			yield (curr.key, curr.value)
 			curr = curr.prev
 
-	def to_ordered_list(self):
+	# Return a list of the items in the dictionary ordered by order of insertion
+	def to_ordered_list(self, reverse=False):
 		ordered_list = []
-		for key_value_pair in self.iteritems_ordered():
-			# Append the current key value pair to the list
-			ordered_list.append(key_value_pair)
+		if not reverse:
+			# Iterate through linked list starting with oldest key value pairs
+			for key_value_pair in self.iteritems_ordered():
+				# Append the current key value pair to the list
+				ordered_list.append(key_value_pair)
+		else:
+			# Iterate through linked list starting with newest key value pairs
+			for key_value_pair in self.iteritems_ordered_reverse():
+				# Append the current key value pair to the list
+				ordered_list.append(key_value_pair)
 
 		return ordered_list
 			
