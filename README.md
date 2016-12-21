@@ -58,7 +58,7 @@ This is the bread and butter of this data structure because it was designed with
 ...   process()
   
 # Iterate dictionary in reverse sorted order
->>> for key, value in map.iteritems_sorted_reverse():
+>>> for key, value in map.iteritems_sorted(reverse=True):
 ...   process()
 
 # Iterate dictionary by order of iteration (oldest first)
@@ -66,12 +66,12 @@ This is the bread and butter of this data structure because it was designed with
 ...   process()
 
 # Iterate dictionary by reverse order of iteration (most recently inserted first)
->>> for key, value in map.iteritems_ordered_reverse():
+>>> for key, value in map.iteritems_ordered(reverse=True):
 ...   process()
 
 # Convert dictionary to list of 2-tuples in (key, value) format in sorted order
 # Also supports reverse=True keyword argument
->>> sorted_list = map.to-sorted_list()
+>>> sorted_list = map.to_sorted_list()
 
 # Convert dictionary to list of 2-tuples in (key, value) format ordered by insertion
 # Also supports reverse=True keyword argument
