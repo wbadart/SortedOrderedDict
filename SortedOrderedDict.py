@@ -22,6 +22,12 @@ class SortedOrderedDict:
 		
 		return (node.value if node else None)
 
+	# Remove the node with the given key
+	# If the key isn't in the tree, simply do nothing
+	def remove(self, key):
+		# Call recursive removal function
+		self.root = self._remove_r(self.root, key)
+
 	# Generator for iterating through items in sorted order
 	def iteritems_sorted(self, reverse=False):
 		if not reverse:
@@ -174,6 +180,58 @@ class SortedOrderedDict:
 				curr = curr.right
 
 		return None
+
+	# Recursive helper function to remove a node
+	def _remove_r(self, node, key):
+		# Base case - if node is empty
+		if node is None:
+			return node
+
+		# Recurse if node is not being removed
+		if self.compare_fn(key, node.key):
+			node.left = self._remove_r(node.left, key)
+		elif key != node.key:
+			node.right = self._remove_r(node.right, key)
+
+		# At this point we know that node will be removed
+
+		# Check if the node doesn't have a left child
+		elif node.left is None:
+			self._remove_ordering(node)
+			node = node.right
+		# Check if the node doesn't have a right child
+		elif node.right is None:
+			self._remove_ordering(node)
+			node = node.left
+		# If the node has two children, determine which way to rotate
+		elif node.left.priority < node.right.priority:
+			node = self._rotate_left(node)
+			node.left = self._remove_r(node.left, key)
+		else:
+			node = self._rotate_right(node)
+			node.right = self._remove_r(node.right, key)
+
+		return node
+
+	# Function to remove a node from the linked list
+	def _remove_ordering(self, node):
+		# Input validation
+		if self.head is None or node is None:
+			return
+
+		if node == self.head and node == self.tail:
+			self.head = None
+			self.tail = None
+		elif node == self.head:
+			self.head = self.head.next
+			self.head.prev = None
+		elif node == self.tail:
+			self.tail = self.tail.prev
+			self.tail.next = None
+		else:
+			node.prev.next = node.next
+			node.next.prev = node.prev
+			
 	
 	# Function to rotate right at the current node
 	def _rotate_right(self, node):

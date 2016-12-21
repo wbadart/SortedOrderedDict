@@ -69,8 +69,6 @@ reverse_sorted_map = map.to_sorted_list(reverse=True)
 if len(reverse_sorted_map) != 1000000 or sorted(reverse_sorted_map)[::-1] != reverse_sorted_map:
 	test_failure("FAILURE: map reverse sorted iteration failed", 3)
 
-
-
 # Test ordered iteration
 print("Testing ordered iteration...")
 
@@ -133,5 +131,50 @@ for i in range(1000000):
 reversed_elements = list(elements.items())[::-1]
 if map.to_ordered_list(reverse=True) != reversed_elements:
 	test_failure("FAILURE: full map reverse ordered iteration failed", 5)
+
+# Test removal
+print("Testing map functionality (removal)...")
+
+# Test using empty map
+print("\tTesting using empty map...")
+map = SortedOrderedDict()
+try:
+	map.remove("sample key")
+except:
+	test_failure("FAILURE: removal of non-existant key threw exception", 6)
+
+# Test using single element map
+print("\tTesting using single element...")
+map = SortedOrderedDict()
+map.insert("test key", "test value")
+map.remove("test key")
+if map.search("test key") or map.to_sorted_list() or map.to_ordered_list():
+	test_failure("FAILURE: removal from single element map failed", 6)
+
+# Test using full map
+print("\tTesting using full map...")
+map = SortedOrderedDict()
+odds = []
+evens = []
+for i in range(0, 1000000, 2):
+	map.insert(i, i)
+	map.insert(i + 1, i + 1)
+	odds.append((i + 1, i + 1))
+	evens.append((i, i))
+
+for key, value in evens:
+	map.remove(key)
+	if map.search(key):
+		test_failure("FAILURE: removal of key from full map failed", 6)
+
+for key, value in odds:
+	if not map.search(key):
+		test_failure("FAILURE: search for existing key after removing another key from full map failed", 6)
+
+if map.to_sorted_list() != odds:
+	test_failure("FAILURE: sorted iteration after removal from full map failed", 6)
+
+if map.to_ordered_list() != odds:
+	test_failure("FAILURE: ordered iteration after removal from full map failed", 6)
 
 print("Tests Completed. All tests passed")
