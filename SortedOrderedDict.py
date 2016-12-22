@@ -249,6 +249,10 @@ class SortedOrderedDict:
 		node.right = t2
 		return c
 	
+	# Allow use of in operator
+	def __contains__(self, item):
+		return True if self._search(item) else False
+
 	@staticmethod
 	def less_than(a, b):
 		return a < b
