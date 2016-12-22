@@ -7,8 +7,9 @@ Insertion and search are fairly efficient in the average case because the treap 
 
 | Operation         | Average       | Worst |
 | ----------------- |:-------------:|:-----:|
-| Insertion         | O(log n)      | O(n)  |
+| Insert            | O(log n)      | O(n)  |
 | Search            | O(log n)      | O(n)  |
+| Remove            | O(log n)      | O(n)  |
 | Ordered Iteration | O(n)          | O(n)  |
 | Sorted Iteration  | O(n)          | O(n)  |
 
@@ -29,9 +30,9 @@ $ git clone https://github.com/ryansmick/SortedOrderedDict.git
 >>> map = SortedOrderedDict(compare_fn=custom_compare_function)
 ```
 
-##Insertion and Searching
+##Insert, Search, and Remove
 
-Insertion and searching are fairly simple. You can insert using the *insert* function, which takes the key and value as parameters. You can search using the *search* function, which takes the key as a parameter and returns the value corresponding to that key. Examples of these can be seen below.
+Inserting, searching, and removing are fairly simple. You can insert using the *insert* function, which takes the key and value as parameters. Additionally, you can search using the *search* function, which takes the key as a parameter and returns the value corresponding to that key. Searching for a given key will return the associated value if it is found in the dictionary, and will return None otherwise. Finally, you can remove using the *remove* function, which takes the key to remove as a parameter. This will remove the key if it exists, and will do nothing otherwise. Examples of these can be seen below.
 
 ```
 # Create dict object
@@ -43,6 +44,9 @@ Insertion and searching are fairly simple. You can insert using the *insert* fun
 # Search for key
 >>> map.search("sample key")
 'sample value'
+
+# Remove the key
+>>> map.remove("sample key")
 ```
 
 ##Iteration
