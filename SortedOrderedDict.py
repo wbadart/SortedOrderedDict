@@ -28,6 +28,12 @@ class SortedOrderedDict:
 		# Call recursive removal function
 		self.root = self._remove_r(self.root, key)
 
+	# Save the dictionary to a file in YAML format
+	def save(self, filepath):
+		with open(filepath, 'w+') as f:
+			for key, value in self.iteritems_ordered():
+				f.write("{}: {}\n".format(key, value))
+
 	# Generator for iterating through items in sorted order
 	def iteritems_sorted(self, reverse=False):
 		if not reverse:
