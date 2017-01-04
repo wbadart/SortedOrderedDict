@@ -2,6 +2,7 @@
 # Module for a sorted ordered dictionary
 
 import random
+from itertools import zip_longest
 
 # Object to represent a dictionary that is ordered by insertion as well as a sorting of the keys
 class SortedOrderedDict:
@@ -19,7 +20,7 @@ class SortedOrderedDict:
 	# If found, returns the value. Otherwise, returns None
 	def search(self, key):
 		node = self._search(key)
-		
+
 		return (node.value if node else None)
 
 	# Remove the node with the given key
@@ -42,7 +43,7 @@ class SortedOrderedDict:
 	def iteritems_sorted_normal(self):
 		stack = []
 		curr = self.root
-		
+
 		# Iterate until loop is broken
 		while True:
 			if curr is not None:
@@ -126,14 +127,14 @@ class SortedOrderedDict:
 			ordered_list.append(key_value_pair)
 
 		return ordered_list
-			
+
 
 	# Helper function to recursively insert an element into the treap
 	def _insert_r(self, node, key, value):
 		if not node:
 			# If node isnt found in tree, make a new one
 			node = Node(key, value)
-			
+
 			# Insert into the linked list
 			if not self.tail:
 				self.head = node
@@ -231,8 +232,8 @@ class SortedOrderedDict:
 		else:
 			node.prev.next = node.next
 			node.next.prev = node.prev
-			
-	
+
+
 	# Function to rotate right at the current node
 	def _rotate_right(self, node):
 		c = node.left
@@ -248,10 +249,22 @@ class SortedOrderedDict:
 		c.left = node
 		node.right = t2
 		return c
-	
+
 	# Allow use of in operator
 	def __contains__(self, item):
 		return True if self._search(item) else False
+
+	# Overload equals operator
+	def __eq__(self, other):
+		# Iterate through dictionaries together
+		for item_a, item_b in zip_longest(self.iteritems_ordered(), other.iteritems_ordered()):
+			if item_a != item_b:
+				return False
+		return True
+
+	# Overload not equals operator
+	def __ne__(self, other):
+		return not self.__eq__(other)
 
 	@staticmethod
 	def less_than(a, b):

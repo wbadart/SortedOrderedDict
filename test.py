@@ -5,6 +5,7 @@ from SortedOrderedDict import SortedOrderedDict
 import sys
 import random
 from collections import OrderedDict
+import copy
 
 # Function called upon error. Prints error message and exits with error code
 def test_failure(msg, error_code):
@@ -176,5 +177,36 @@ if map.to_sorted_list() != odds:
 
 if map.to_ordered_list() != odds:
 	test_failure("FAILURE: ordered iteration after removal from full map failed", 6)
+
+# Test Overloaded equality operators
+print("Testing overloaded equality operators...")
+map1 = SortedOrderedDict()
+map2 = SortedOrderedDict()
+map3 = SortedOrderedDict()
+for i in range(500000):
+	map1.insert(i, 2*i)
+	map2.insert(i, 2*i)
+	map3.insert(i, 2*i)
+
+if not map1 == map2:
+	test_failure("FAILURE: equality operator on equal maps failed", 7)
+if map1 != map2:
+	test_failure("FAILURE: inequality operator on equal maps failed", 7)
+
+# Add a new value
+map2.insert(1000000, 2000000)
+
+if map1 == map2:
+	test_failure("FAILURE: equality operator on maps of unequal length failed", 7)
+if not map1 != map2:
+	test_failure("FAILURE: inequality operator on maps of unequal length failed", 7)
+
+# Overwrite an existing value
+map3.insert(10, 15)
+
+if map1 == map3:
+	test_failure("FAILURE: equality operator on different maps failed", 7)
+if not map1 != map3:
+	test_failure("FAILURE: inequality operator on different maps failed", 7)
 
 print("Tests Completed. All tests passed")
