@@ -96,7 +96,9 @@ def save(self, save_filepath=None, delim=': ')
 def load(self, filepath, delim=': ', key_trans_func=None, value_trans_func=None, add_to_existing=False)
 ```
 
-Starting with the save function, the definition is fairly straightforward. It includes optional parameters for save_filepath and delim. You can choose to specify these parameters in the constructor so that ```save()``` performs the same action every time, or you can specify parameters in the function call itself. Additionally, if you specify parameters in the constructor, you can override them by specifying them in the function call.
+Starting with the save function, the definition is fairly straightforward. It includes optional parameters for save_filepath and delim. You can choose to specify these parameters in the constructor so that ```save()``` performs the same action every time, or you can specify parameters in the function call itself. Additionally, if you specify parameters in the constructor, you can override them by specifying them in the function call. 
+
+Note: When using an object with the dictionary, it will be saved as a string using the ```str()``` function to convert the object to a string. In order for this to function properly, the object must have an overloaded``` __str__()``` function that should encode the object as a single line string using a different delimiter between member variables than the dictionary delimiter.
 
 The load function works very similarly, but has some additional parameters. You can use the key_trans_func and value_trans_func parameters to transform the strings read from the file to another data type or to an object type. Additionally, you can optionally use add_to_existing to add the contents of a file to an existing PersistentDict. Otherwise, the dictionary will be cleared before loading the data.
 
