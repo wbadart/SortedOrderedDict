@@ -81,3 +81,32 @@ This is the bread and butter of this data structure because it was designed with
 # Also supports reverse=True keyword argument
 >>> ordered_list = map.to_ordered_list()
 ```
+
+# PersistentDict
+A persistent extension of SortedOrderedDict that has the ability to save and load to and from a YAML file. Since PeristentDict is a subclass of SortedOrderedDict, all functions listed above for SortedOrderedDict will work for PersistentDict, and there are several other functions available only for PersistentDict, which are described below.
+
+##Save and Load Operations
+The function definitions for save() and load() can be seen below.
+
+```
+# Save function definition
+def save(self, save_filepath=None, delim=': ')
+
+# Load function definition
+def load(self, filepath, delim=': ', key_trans_func=None, value_trans_func=None, add_to_existing=False)
+```
+
+Starting with the save function, the definition is fairly straightforward. It includes optional parameters for save_filepath and delim. You can choose to specify these parameters in the constructor so that ```save()``` performs the same action every time, or you can specify parameters in the function call itself. Additionally, if you specify parameters in the constructor, you can override them by specifying them in the function call.
+
+The load function works very similarly, but has some additional parameters. You can use the key_trans_func and value_trans_func parameters to transform the strings read from the file to another data type or to an object type. Additionally, you can optionally use add_to_existing to add the contents of a file to an existing PersistentDict. Otherwise, the dictionary will be cleared before loading the data.
+
+##Context Manager
+The PersistentDict class can also be used in a context manager using the "with" keyword. This can be done by passing arguments to the constructor. The benefit of using the class in this way will ensure that your dictionary gets saved to a file before your program quits, no matter what happens during program exexcution. An example can be seen below.
+
+```
+# Open the PersistentDict in a context manager
+>>> with PersistentDict(save_filepath='/sample/path/map.yml') as map:
+...   process()
+
+# Map is automatically saved to file no matter what happens in process()
+```
