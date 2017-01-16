@@ -6,7 +6,9 @@ from SortedOrderedDict import SortedOrderedDict
 # Subclass of SortedOrderedDict that has teh ability to save and load to and from a YAML file
 # Additionally, implemented functions to allow use with a context manager (i.e. "with PersistentDict(...) as map")
 class PersistentDict(SortedOrderedDict):
-	def __init__(self, save_filepath=None, save_delim=': ', compare_fn=None, load_filepath=None, load_delim=': ', load_key_trans_func=None, load_value_trans_func=None):
+	DEFAULT_DELIM = ": "
+
+	def __init__(self, save_filepath=None, save_delim=DEFAULT_DELIM, compare_fn=None, load_filepath=None, load_delim=': ', load_key_trans_func=None, load_value_trans_func=None):
 		super(PersistentDict, self).__init__(compare_fn=compare_fn)
 		if load_filepath:
 			self.load(load_filepath, delim=load_delim, key_trans_func=load_key_trans_func, value_trans_func=load_key_trans_func)
@@ -14,7 +16,7 @@ class PersistentDict(SortedOrderedDict):
 		self.save_delim = save_delim
 
 	# Save the dictionary to a file in YAML format
-	def save(self, save_filepath=None, delim=': '):
+	def save(self, save_filepath=None, delim=None):
 		if save_filepath:
 			filepath = save_filepath
 		elif self.save_filepath:
@@ -22,9 +24,14 @@ class PersistentDict(SortedOrderedDict):
 		else:
 			raise ValueError("No save filepath specified. Save filepath must be specified as either constructor parameter or save function parameter")
 
+		if delim:
+			current_delim = delim
+		else:
+			current_delim = self.save_delim
+
 		with open(filepath, 'w+') as f:
 			for key, value in self.iteritems_ordered():
-				f.write("{}{}{}\n".format(key, delim, value))
+				f.write("{}{}{}\n".format(key, current_delim, value))
 
 	# Load a previously saved dictionary into a SortedOrderedDict object
 	def load(self, filepath, delim=': ', key_trans_func=None, value_trans_func=None, add_to_existing=False):
