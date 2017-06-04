@@ -1,7 +1,7 @@
 # SortedOrderedDict [![Build Status](https://travis-ci.org/ryansmick/SortedOrderedDict.svg?branch=master)](https://travis-ci.org/ryansmick/SortedOrderedDict)
 A python map with a treap backend that can be traversed in sorted order or by order of insertion.
 
-##Complexity
+## Complexity
 
 Insertion and search are fairly efficient in the average case because the treap uses probabilistic balancing of the tree. The worst case is the same as that of a binary search tree, but will only occur by random chance rather than a specific order of insertion with the BST. A full table of the complexities of various operations can be seen below.
 
@@ -13,7 +13,7 @@ Insertion and search are fairly efficient in the average case because the treap 
 | Ordered Iteration | O(n)          | O(n)  |
 | Sorted Iteration  | O(n)          | O(n)  |
 
-##Usage
+## Usage
 In order to use the dictionary, simply clone the repository into your project directory and import the class, as can be seen below.
 
 ```
@@ -30,7 +30,7 @@ $ git clone https://github.com/ryansmick/SortedOrderedDict.git
 >>> map = SortedOrderedDict(compare_fn=custom_compare_function)
 ```
 
-##Insert, Search, and Remove
+## Insert, Search, and Remove
 
 Inserting, searching, and removing are fairly simple. You can insert using the *insert* function, which takes the key and value as parameters. Additionally, you can search using the *search* function, which takes the key as a parameter and returns the value corresponding to that key. Searching for a given key will return the associated value if it is found in the dictionary, and will return None otherwise. Finally, you can remove using the *remove* function, which takes the key to remove as a parameter. This will remove the key if it exists, and will do nothing otherwise. Examples of these can be seen below.
 
@@ -49,7 +49,7 @@ Inserting, searching, and removing are fairly simple. You can insert using the *
 >>> map.remove("sample key")
 ```
 
-##Iteration
+## Iteration
 This is the bread and butter of this data structure because it was designed with versitile iteration in mind. The dictionary can be iterated in sorted order or by order of insertion. A python list can also easily be created from the dictionary in both sorted order and by order of iteration. Examples of this functionality can be seen below.
 
 ```
@@ -85,7 +85,7 @@ This is the bread and butter of this data structure because it was designed with
 # PersistentDict
 A persistent extension of SortedOrderedDict that has the ability to save and load to and from a YAML file. Since PeristentDict is a subclass of SortedOrderedDict, all functions listed above for SortedOrderedDict will work for PersistentDict, and there are several other functions available only for PersistentDict, which are described below.
 
-##Save and Load Operations
+## Save and Load Operations
 The function definitions for save() and load() can be seen below.
 
 ```
@@ -102,7 +102,7 @@ Note: When using an object with the dictionary, it will be saved as a string usi
 
 The load function works very similarly, but has some additional parameters. You can use the key_trans_func and value_trans_func parameters to transform the strings read from the file to another data type or to an object type. Additionally, you can optionally use add_to_existing to add the contents of a file to an existing PersistentDict. Otherwise, the dictionary will be cleared before loading the data.
 
-##Context Manager
+## Context Manager
 The PersistentDict class can also be used in a context manager using the "with" keyword. This can be done by passing arguments to the constructor. The benefit of using the class in this way will ensure that your dictionary gets saved to a file before your program quits, no matter what happens during program exexcution. An example can be seen below.
 
 ```
