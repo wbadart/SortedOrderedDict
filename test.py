@@ -1,7 +1,7 @@
 # test.py
 # Test script for SortedorderedDict
 
-from SortedOrderedDict import SortedOrderedDict
+from smickdict.SortedOrderedDict import SortedOrderedDict
 import sys
 import random
 from collections import OrderedDict

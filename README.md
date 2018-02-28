@@ -20,6 +20,10 @@ In order to use the dictionary, simply clone the repository into your project di
 # Clone the repo
 $ git clone https://github.com/ryansmick/SortedOrderedDict.git
 
+# Or install via pip:
+
+$ pip install git+https://github.com/ryansmick/SortedOrderedDict.git
+
 # In python file, import the dict
 >>> from SortedOrderedDict import SortedOrderedDict
 
@@ -60,7 +64,7 @@ This is the bread and butter of this data structure because it was designed with
 # Iterate dictionary in sorted order
 >>> for key, value in map.iteritems_sorted():
 ...   process()
-  
+
 # Iterate dictionary in reverse sorted order
 >>> for key, value in map.iteritems_sorted(reverse=True):
 ...   process()
@@ -96,7 +100,7 @@ def save(self, save_filepath=None, delim=': ')
 def load(self, filepath, delim=': ', key_trans_func=None, value_trans_func=None, add_to_existing=False)
 ```
 
-Starting with the save function, the definition is fairly straightforward. It includes optional parameters for save_filepath and delim. You can choose to specify these parameters in the constructor so that ```save()``` performs the same action every time, or you can specify parameters in the function call itself. Additionally, if you specify parameters in the constructor, you can override them by specifying them in the function call. 
+Starting with the save function, the definition is fairly straightforward. It includes optional parameters for save_filepath and delim. You can choose to specify these parameters in the constructor so that ```save()``` performs the same action every time, or you can specify parameters in the function call itself. Additionally, if you specify parameters in the constructor, you can override them by specifying them in the function call.
 
 Note: When using an object with the dictionary, it will be saved as a string using the ```str()``` function to convert the object to a string. In order for this to function properly, the object must have an overloaded``` __str__()``` function that should encode the object as a single line string using a different delimiter between member variables than the dictionary delimiter.
 

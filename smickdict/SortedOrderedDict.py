@@ -2,10 +2,13 @@
 # Module for a sorted ordered dictionary
 
 import random
-from itertools import zip_longest
+try:
+    from itertools import zip_longest
+except ImportError:
+    from itertools import izip_longest as zip_longest
 
 # Object to represent a dictionary that is ordered by insertion as well as a sorting of the keys
-class SortedOrderedDict:
+class SortedOrderedDict(object):
 	def __init__(self, compare_fn=None):
 		self.root = None
 		self.head = None

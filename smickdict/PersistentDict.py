@@ -1,7 +1,7 @@
 # PersistentDict.py
 # Implements a class for a Persistent Dictionary that has the ability to save to and load from a YAML file
 
-from SortedOrderedDict import SortedOrderedDict
+from smickdict.SortedOrderedDict import SortedOrderedDict
 
 # Subclass of SortedOrderedDict that has teh ability to save and load to and from a YAML file
 # Additionally, implemented functions to allow use with a context manager (i.e. "with PersistentDict(...) as map")
